@@ -1,0 +1,44 @@
+<mat-card appearance="outlined" class="m-2 p-3">
+
+    <header class="text-2xl mb-3">Login</header>
+
+    <form (ngSubmit)="requestLogin()" [formGroup]="loginFormGroup" class="flex flex-col gap-2">
+        <mat-form-field class="w-full">
+            <mat-label>email</mat-label>
+            <input type="email" matInput formControlName="email" required>
+            @if (loginFormGroup.get('email')?.hasError('email')) {
+            <mat-error>Please enter a valid email address</mat-error>
+            }
+            @if (loginFormGroup.get('email')?.hasError('required')) {
+            <mat-error>email is <strong>required</strong></mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+            <mat-label>password</mat-label>
+            <input type="password" matInput formControlName="password" required>
+            @if (loginFormGroup.get('password')?.hasError('minlength')) {
+            <mat-error>Password must be 8 characters minimum</mat-error>
+            }
+            @if (loginFormGroup.get('password')?.hasError('required')) {
+            <mat-error>password is <strong>required</strong></mat-error>
+            }
+        </mat-form-field>
+
+        <div class="flex flex-col gap-3 mt-3">
+
+            @if (showSpinner) {
+            <div class="flex justify-center">
+                <mat-spinner></mat-spinner>
+            </div>
+            }@else {
+            <button matButton="filled" type="submit">login</button>
+            <button class="w-full" type="reset" matButton="tonal" (click)="clearForm()">cancel</button>
+            }
+
+        </div>
+    </form>
+
+
+
+</mat-card>
