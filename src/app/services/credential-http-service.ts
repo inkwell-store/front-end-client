@@ -3,13 +3,15 @@ import { inject, Service } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Credential } from '../models/Credential';
 import { JwtTokenResponse } from '../models/JwtTokenResponse';
+import { environment } from '../../environments/environment';
+import { ResourceEnum } from '../enums/ResourceEnum';
 
 @Service()
 export class CredentialHttpService {
 
     private readonly httpClient: HttpClient = inject(HttpClient);
 
-    private readonly BASE_URL: string = "http://localhost:8081/api/auth/";
+    private readonly BASE_URL: string = `${environment.httpApiUrl}/${ResourceEnum.AUTH}/`;
 
     /**
      * Calls the Authorization Service to request a jwt token for a given pair of credentials.

@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    httpBaseUrl: "http://localhost:8080/"
+    httpApiUrl: "http://api-gatway:8080/api"
 };
