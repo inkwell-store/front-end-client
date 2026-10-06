@@ -13,7 +13,7 @@ COPY . .
 RUN npx ng build --configuration production
 
 # ---------- DEPLOYMENT STAGE ----------
-FROM nginx:1.31.4-alpine AS deployment_stage
+FROM nginx:1.30.5-alpine AS deployment_stage
 
 WORKDIR /usr/share/nginx/html/
 
