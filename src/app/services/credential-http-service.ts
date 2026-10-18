@@ -15,18 +15,18 @@ export class CredentialHttpService {
 
     /**
      * Calls the Authorization Service to request a jwt token for a given pair of credentials.
-     * If the login is successful then a jwt token is returned and a
-     * refresh token is added to a httpOnly cookie.
+     * If the login is successful then a jwt token is returned and a refresh token is added to
+     * a httpOnly cookie.
      *
      * @param credential is the of crendetials
-     * @returns JwtTokenResponse
+     * @returns JwtTokenResponse with a jwt
      */
     loginCredential(credential: Credential): Observable<JwtTokenResponse> {
-        return this.httpClient.post<JwtTokenResponse>(this.BASE_URL + "login", credential);
+        return this.httpClient.post<JwtTokenResponse>(this.BASE_URL + "login", credential, { withCredentials: true });
     }
 
     /**
-     * Calls the Authorization Service to to register a new set of Credentials.
+     * Calls the Authorization Service to register a new set of Credentials.
      * If the registration is successful then a jwt token is returned and a refresh token
      * is added to a httpOnly cookie.
      *
@@ -35,6 +35,19 @@ export class CredentialHttpService {
      */
     registerCredential(credential: Credential): Observable<JwtTokenResponse> {
         return this.httpClient.post<JwtTokenResponse>(this.BASE_URL + "create-account", credential);
+    }
+
+    /**
+     * Calls the Authorization Service to request a new jwt-access-token using the refresh token
+     * stored in the httpOnly cookie.
+     *
+     * @returns JwtTokenResponse
+     */
+    refreshAccessToken(): Observable<JwtTokenResponse> {
+        // The refresh token is stored in a secure http-only cookie, so the browser will attach
+        // it to the request automatically. This is important, because POST is the adequate http
+        // method to use, but the body in this case in null.
+        return this.httpClient.post<JwtTokenResponse>(`${this.BASE_URL}${ResourceEnum.REFRESH}`, null, { withCredentials: true });
     }
 
 }

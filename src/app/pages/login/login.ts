@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -7,21 +7,25 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CredentialHttpService } from '../../services/credential-http-service';
 import { Credential } from '../../models/Credential';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {MatDividerModule} from '@angular/material/divider';
-import { RouterLink } from "@angular/router";
+import { MatDividerModule } from '@angular/material/divider';
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { AuthService } from '../../services/auth-service';
 
 
 @Component({
     selector: 'app-login',
-    imports: [RouterLink, MatDividerModule,MatCardModule, MatButtonModule, MatInputModule, MatFormFieldModule, ReactiveFormsModule, MatProgressSpinnerModule],
+    imports: [RouterLink, MatDividerModule, MatCardModule, MatButtonModule, MatInputModule, MatFormFieldModule, ReactiveFormsModule, MatProgressSpinnerModule],
     templateUrl: './login.html',
     styleUrl: './login.css',
 })
-export class Login {
+export class Login implements OnInit {
 
     private readonly httpService: CredentialHttpService = inject(CredentialHttpService);
     private readonly authService: AuthService = inject(AuthService);
+    private readonly routerService: Router = inject(Router);
+    private readonly activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+
+    private redirectToAfterLogin: string | null = null;
 
     showSpinner: boolean = false;
 
@@ -36,6 +40,10 @@ export class Login {
         ])
     });
 
+    ngOnInit(): void {
+        this.redirectToAfterLogin = this.activatedRoute.snapshot.queryParamMap.get('redirectTo');
+    }
+
     requestLogin(): void {
 
         if (this.loginFormGroup.valid) {
@@ -44,12 +52,14 @@ export class Login {
 
             this.httpService.loginCredential(credential).subscribe({
                 next: (response) => {
-                    console.log("login successful with response: " + response.token)
                     this.authService.initiateSession(response.token);
-                },
-                error: (err) => {
-                    console.log(err);
-                    this.showSpinner = false;
+
+                    // then I redirect the user to home page or from his original url
+                    if (this.redirectToAfterLogin === null) {
+                        this.routerService.navigateByUrl("home");
+                    } else {
+                        this.routerService.navigateByUrl(this.redirectToAfterLogin);
+                    }
                 }
             })
 

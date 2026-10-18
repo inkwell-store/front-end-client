@@ -1,0 +1,37 @@
+<div class="flex h-dvh">
+
+    <!-- navigation -->
+    <ng-container *ngTemplateOutlet="desktopNav"></ng-container>
+
+    <!-- side content -->
+    <div class="flex-1 p-3 sm:p-5 md:p-5">
+        <router-outlet />
+    </div>
+</div>
+
+<ng-template #desktopNav>
+    <nav class="hidden md:block bg-(--mat-sys-primary-fixed) p-2.5">
+        <ul>
+            <li>
+                <a routerLink="profile" matButton>
+                    <mat-icon>account_circle</mat-icon>
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="addresses" matButton>
+                    <mat-icon>add_home_work</mat-icon>
+                    Addresses
+                </a>
+            </li>
+        </ul>
+    </nav>
+</ng-template>
+
+<ng-template #mobileNav>
+    <nav>
+        <li>
+            <a></a>
+        </li>
+    </nav>
+</ng-template>

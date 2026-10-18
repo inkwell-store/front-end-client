@@ -1,0 +1,67 @@
+<p matDialogTitle>
+    @if(data.address) {
+        Update address
+    } @else {
+        New address
+    }
+</p>
+
+<mat-dialog-content>
+
+    <form [formGroup]="addressFormGroup" class="">
+
+        <mat-form-field class="w-full">
+            <mat-label>name</mat-label>
+            <input matInput formControlName="name">
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+            <mat-label>street</mat-label>
+            <input matInput formControlName="street">
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+            <mat-label>number</mat-label>
+            <input matInput formControlName="number">
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+            <mat-label>city</mat-label>
+            <input matInput formControlName="city">
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+            <mat-label>state</mat-label>
+            <mat-select formControlName="state">
+                @for(state of states; track state) {
+                <mat-option [value]="state.abbreviation">{{state.name}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+            <mat-label>postal code</mat-label>
+            <input matInput formControlName="postalCode">
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+            <mat-label>line</mat-label>
+            <input matInput formControlName="line">
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+            <mat-label>type</mat-label>
+            <mat-select formControlName="type">
+                <mat-option [value]="'SHIPPING'">shipping</mat-option>
+                <mat-option [value]="'BILLING'">billing</mat-option>
+                <mat-option [value]="'BILLING_AND_SHIPPING'">shipping and billing</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+        <button matButton="filled" (click)="onSave()">save</button>
+        <button matButton="tonal" (click)="onCancel()">cancel</button>
+</mat-dialog-actions>

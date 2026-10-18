@@ -35,11 +35,9 @@ export class AuthService {
             exp: decodedToken.exp!
         }
 
-        console.log("session created with: " + this.session);
-
         this.isUserAuthenticated$.next(true);
 
-        this.router.navigateByUrl("/home");
+        console.log("Authentication successful. A new local sesstion was created.");
     }
 
     getJwtTokenAsString(): string | null {

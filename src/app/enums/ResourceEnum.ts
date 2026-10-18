@@ -4,8 +4,9 @@
 export enum ResourceEnum {
     ME = "me",
     LOGIN = "login",
-    REGISTER_ACCOUNT = "login",
+    REGISTER_ACCOUNT = "create-account",
     AUTH = "auth",
-    CUSTOMER = "customer",
-    ADDRESS = "address",
+    CUSTOMER = "customers",
+    ADDRESS = "addresses",
+    REFRESH = "refresh"
 }

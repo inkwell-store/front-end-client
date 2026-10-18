@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>
+    {{data.title ? data.title : "Confirm"}}
+</h2>
+
+<mat-dialog-content>
+    {{data.body ? data.body : 'Proceed with the action?' }}
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button matButton="filled" (click)="onConfirm()">confirm</button>
+    <button matButton="tonal" (click)="onCancel()">cancel</button>
+</mat-dialog-actions>
