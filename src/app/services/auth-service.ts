@@ -12,8 +12,6 @@ import { Router } from '@angular/router';
 @Service()
 export class AuthService {
 
-    private readonly router: Router = inject(Router);
-
     private session: LocalSession | null = null;
     private isUserAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 

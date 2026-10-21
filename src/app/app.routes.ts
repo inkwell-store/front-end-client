@@ -5,6 +5,7 @@ import { Home } from './pages/home/home';
 import { CustomerDashboard } from './pages/customer-dashboard/customer-dashboard';
 import { CustomerAddress } from './pages/customer-address/customer-address';
 import { CustomerProfile } from './pages/customer-profile/customer-profile';
+import { CustomerSettings } from './pages/customer-settings/customer-settings';
 
 export const routes: Routes = [
     { path: 'login', component: Login },
@@ -17,7 +18,8 @@ export const routes: Routes = [
         children: [
             { path: '', redirectTo: 'profile', pathMatch: 'full'},
             { path: 'addresses', component: CustomerAddress },
-            { path: 'profile', component: CustomerProfile }
+            { path: 'profile', component: CustomerProfile },
+            { path: 'settings', component: CustomerSettings }
         ]
     }
 ];

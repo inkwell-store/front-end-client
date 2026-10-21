@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CredentialHttpService } from '../../services/credential-http-service';
 import { Credential } from '../../models/Credential';
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import {MatDividerModule} from '@angular/material/divider';
 import { AuthService } from '../../services/auth-service';
 
@@ -22,6 +22,7 @@ export class AccountCreation {
 
     private readonly httpService: CredentialHttpService = inject(CredentialHttpService);
     private readonly authService: AuthService = inject(AuthService);
+    private readonly routerService: Router = inject(Router);
 
     showSpinner: boolean = false;
 
@@ -46,6 +47,7 @@ export class AccountCreation {
                 next: (response) => {
                     this.showSpinner = false;
                     this.authService.initiateSession(response.token);
+                    this.routerService.navigateByUrl("home");
                 },
                 error: (err) => { console.log(err) }
 

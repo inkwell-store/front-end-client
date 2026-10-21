@@ -50,4 +50,8 @@ export class CredentialHttpService {
         return this.httpClient.post<JwtTokenResponse>(`${this.BASE_URL}${ResourceEnum.REFRESH}`, null, { withCredentials: true });
     }
 
+    logout(): Observable<void> {
+        return this.httpClient.post<void>(this.BASE_URL + ResourceEnum.LOGOUT, null, { withCredentials: true });
+    }
+
 }

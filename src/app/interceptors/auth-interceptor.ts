@@ -13,13 +13,16 @@ export const authInterceptor: HttpInterceptorFn = (
     const token: string | null = authService.getJwtTokenAsString();
     const BASE_URL: string = `${environment.httpApiUrl}`;
 
+    /**
+     * This a list for public endpoints. They don't require an access token to be
+     * sent alongside them.
+     */
     const publicEndpoints: string[] = [
         `${BASE_URL}/${ResourceEnum.AUTH}/${ResourceEnum.LOGIN}`,
         `${BASE_URL}/${ResourceEnum.AUTH}/${ResourceEnum.REGISTER_ACCOUNT}`,
         `${BASE_URL}/${ResourceEnum.AUTH}/${ResourceEnum.REFRESH}`,
+        `${BASE_URL}/${ResourceEnum.AUTH}/${ResourceEnum.LOGOUT}`,
     ];
-
-    // console.log(publicEndpoints);
 
     // exclude token addition for public endpoints:
     if (publicEndpoints.includes(req.url)) {
