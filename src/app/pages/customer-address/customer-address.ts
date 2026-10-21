@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatCardModule } from "@angular/material/card";
-import { HttpAddressService } from '../../services/http-address-service';
+import { HttpCustomerService } from '../../services/http-customer-service';
 import { IdentifiedAddress } from '../../models/IdentifiedAddress';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,17 +13,18 @@ import { PatchableAddreess } from '../../models/PatchableAddreess';
 import { ConfirmationDialog } from '../../components/confirmation-dialog/confirmation-dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { InfoDialog } from '../../components/info-dialog/info-dialog';
+import {MatMenuModule} from '@angular/material/menu';
 
 
 @Component({
     selector: 'app-customer-address',
-    imports: [MatCardModule, MatIcon, MatButtonModule, MatDivider, MatTooltipModule],
+    imports: [MatCardModule, MatIcon, MatButtonModule, MatDivider, MatTooltipModule, MatMenuModule],
     templateUrl: './customer-address.html',
     styleUrl: './customer-address.css',
 })
 export class CustomerAddress implements OnInit {
 
-    private readonly httpAddressService: HttpAddressService = inject(HttpAddressService);
+    private readonly HttpCustomerService: HttpCustomerService = inject(HttpCustomerService);
     private readonly snackBarService: MatSnackBar = inject(MatSnackBar);
     private readonly dialogService: MatDialog = inject(MatDialog);
 
@@ -38,7 +39,7 @@ export class CustomerAddress implements OnInit {
 
         this.isDataLoading.set(true);
 
-        this.httpAddressService.getAddressList().subscribe({
+        this.HttpCustomerService.getAddressList().subscribe({
             next: (response) => {
                 this.addressList.set(response);
                 this.isDataLoading.set(false);
@@ -61,7 +62,7 @@ export class CustomerAddress implements OnInit {
                     const addressWithBilling = this.addressList().filter((a) => a.type != 'SHIPPING');
 
                     if (addressWithBilling.length > 2) {
-                        this.httpAddressService.deleteAddress(addressId).subscribe({
+                        this.HttpCustomerService.deleteAddress(addressId).subscribe({
                             next: () => {
                                 this.addressList.update((arr) => arr.filter(a => a.id != addressId));
                                 this.snackBarService.open("Address deleted successfully!");
@@ -88,7 +89,7 @@ export class CustomerAddress implements OnInit {
         addressDialog.afterClosed().subscribe({
             next: (value: SimpleAddress | undefined) => {
                 if (value) {
-                    this.httpAddressService.createAddress(value).subscribe({
+                    this.HttpCustomerService.createAddress(value).subscribe({
                         next: (res) => {
                             this.addressList.update(list => [...list, res]);
                             this.snackBarService.open("Address added successfully!")
@@ -112,7 +113,7 @@ export class CustomerAddress implements OnInit {
             next: (value: SimpleAddress | undefined) => {
                 if (value) {
                     const toUpdate: PatchableAddreess = Object.assign({ id: id }, value);
-                    this.httpAddressService.patchAddress(toUpdate).subscribe({
+                    this.HttpCustomerService.patchAddress(toUpdate).subscribe({
                         next: () => {
 
                             // updates the signal with the updated address

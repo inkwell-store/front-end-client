@@ -8,5 +8,6 @@ export enum ResourceEnum {
     AUTH = "auth",
     CUSTOMER = "customers",
     ADDRESS = "addresses",
-    REFRESH = "refresh"
+    REFRESH = "refresh",
+    PROFILE = "profile"
 }

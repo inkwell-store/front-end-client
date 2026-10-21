@@ -31,9 +31,11 @@ export const failedRefreshAccessTokenInterceptor: HttpInterceptorFn = (req, next
                 dialog.afterClosed().subscribe({
                     next: () => {
                         routerService.navigate(['login'], {
-                            // queryParams: {
-                            //     redirectTo: 'https://other-app.example.com'
-                            // }
+                            queryParams: {
+                                // for a url like: localhost:4200/dashboard/profile
+                                // returns: dashboard/profile (without the preceeding /)
+                                redirectTo: routerService.url.substring(1)
+                            }
                         });
                     }
                 })

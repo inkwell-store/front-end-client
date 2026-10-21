@@ -8,9 +8,11 @@ import { invalidAccessTokenInterceptor } from './interceptors/invalid-access-tok
 import { failedRefreshAccessTokenInterceptor } from './interceptors/failed-refresh-access-token-interceptor';
 import { internalErrorResponseInterceptor } from './interceptors/internal-error-response-interceptor';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { DatePipe } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
     providers: [
+        DatePipe,
         provideBrowserGlobalErrorListeners(),
         provideRouter(routes),
         provideHttpClient(

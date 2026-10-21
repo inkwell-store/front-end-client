@@ -1,37 +1,26 @@
-<div class="flex h-dvh">
+<div class="flex items-start">
 
-    <!-- navigation -->
-    <ng-container *ngTemplateOutlet="desktopNav"></ng-container>
-
-    <!-- side content -->
-    <div class="flex-1 p-3 sm:p-5 md:p-5">
-        <router-outlet />
-    </div>
-</div>
-
-<ng-template #desktopNav>
-    <nav class="hidden md:block bg-(--mat-sys-primary-fixed) p-2.5">
-        <ul>
-            <li>
-                <a routerLink="profile" matButton>
-                    <mat-icon>account_circle</mat-icon>
-                    <span>Profile</span>
-                </a>
-            </li>
-            <li>
-                <a routerLink="addresses" matButton>
-                    <mat-icon>add_home_work</mat-icon>
-                    Addresses
-                </a>
-            </li>
+    <!-- Navigation -->
+    <nav class="hidden md:block sticky top-0 h-screen w-64 shrink-0 overflow-y-auto bg-(--mat-sys-primary-fixed)">
+        <ul class="flex flex-col gap-3 py-3 px-4">
+            @for (item of navItems; track $index) {
+                <li>
+                    <a [routerLink]="item.link"
+                       routerLinkActive="bg-(--mat-sys-primary) text-white"
+                       matRipple
+                       class="flex items-center gap-4 w-full cursor-pointer px-4 py-3 rounded-lg text-(--mat-sys-primary)"
+                    >
+                        <mat-icon [fontIcon]="item.iconName"></mat-icon>
+                        <span>{{ item.name }}</span>
+                    </a>
+                </li>
+            }
         </ul>
     </nav>
-</ng-template>
 
-<ng-template #mobileNav>
-    <nav>
-        <li>
-            <a></a>
-        </li>
-    </nav>
-</ng-template>
+    <!-- Side content -->
+    <div class="flex-1 min-w-0 p-3 sm:p-5">
+        <router-outlet />
+    </div>
+
+</div>

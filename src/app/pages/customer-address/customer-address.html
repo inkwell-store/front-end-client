@@ -1,14 +1,16 @@
 <h1 class="text-xl md:text-3xl">Addresses</h1>
 
-<p class="my-4 text-sm sm:text-base">
+<p class="my-4">
     Here you can manage your addresses.
 </p>
-<p class="my-4 text-sm sm:text-base">
-    You can have multiple addresses, but note that you must have at least one billing addreess registered to place an order.
+<p class="my-4">
+    You can have multiple addresses, but note that you must have at least one billing addreess registered to place an
+    order.
 </p>
 
-<button matButton="filled" (click)="newAddress()" matTooltip="Create a new address">
-    new
+<button matFab extended (click)="newAddress()" matTooltip="Create a new address">
+    <mat-icon>add</mat-icon>
+    create address
 </button>
 
 <div class="my-5">
@@ -31,14 +33,20 @@
             <h2 class="md:text-lg lg:text-xl font-medium">{{address.name}}</h2>
             }
 
-            <div class="flex">
-                <button matIconButton matTooltip="Delete this address" (click)="deleteAddress(address.id)">
+            <button matIconButton [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="deleteAddress(address.id)">
                     <mat-icon>delete</mat-icon>
+                    <span>Delete</span>
                 </button>
-                <button matIconButton matTooltip="Edit this address" (click)="updateAddress(address)">
+                <button mat-menu-item (click)="updateAddress(address)">
                     <mat-icon>edit_line</mat-icon>
+                    <span>Edit</span>
                 </button>
-            </div>
+            </mat-menu>
+
         </div>
 
 

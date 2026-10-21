@@ -1,0 +1,32 @@
+<!-- Wrap or ensure mat-dialog-title is present -->
+<h2 mat-dialog-title>Update your profile</h2>
+
+<mat-dialog-content>
+    <form [formGroup]="profileFormGroup" class="">
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>First name</mat-label>
+            <input type="text" matInput formControlName="firstName" required>
+            @if (profileFormGroup.get('firstName')?.hasError('required')) {
+            <mat-error>first name is <strong>required</strong></mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Last name</mat-label>
+            <input type="text" matInput formControlName="lastName" required>
+            @if (profileFormGroup.get('lastName')?.hasError('required')) {
+            <mat-error>last name is <strong>required</strong></mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Date of birth</mat-label>
+            <input type="date" matInput formControlName="dateOfBirth">
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-flat-button (click)="onSave()">Save</button>
+    <button matButton="tonal" (click)="onCancel()">Cancel</button>
+</mat-dialog-actions>
