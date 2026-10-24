@@ -6,6 +6,7 @@ import { CustomerDashboard } from './pages/customer-dashboard/customer-dashboard
 import { CustomerAddress } from './pages/customer-address/customer-address';
 import { CustomerProfile } from './pages/customer-profile/customer-profile';
 import { CustomerSettings } from './pages/customer-settings/customer-settings';
+import { NotFound } from './pages/not-found/not-found';
 
 export const routes: Routes = [
     { path: 'login', component: Login },
@@ -21,5 +22,8 @@ export const routes: Routes = [
             { path: 'profile', component: CustomerProfile },
             { path: 'settings', component: CustomerSettings }
         ]
-    }
+    },
+
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: "**", component: NotFound }
 ];
