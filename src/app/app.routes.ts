@@ -25,6 +25,7 @@ export const routes: Routes = [
         ]
     },
 
+    { path: "not-found", component: NotFound },
     { path: '', redirectTo: 'home', pathMatch: 'full' },
-    { path: "**", component: NotFound }
+    { path: "**", redirectTo: 'not-found', pathMatch: 'full' }
 ];

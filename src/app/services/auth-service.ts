@@ -15,6 +15,8 @@ export class AuthService {
     private session: LocalSession | null = null;
     private isUserAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
+    private readonly WAS_USER_LOGGED: string = "WAS_USER_LOGGED";
+
     /**
      * Initiates a local session for the user.
      *
@@ -33,6 +35,8 @@ export class AuthService {
             exp: decodedToken.exp!
         }
 
+        localStorage.setItem(this.WAS_USER_LOGGED, "true");
+
         this.isUserAuthenticated$.next(true);
 
         console.log("Authentication successful. A new local sesstion was created.");
@@ -49,11 +53,16 @@ export class AuthService {
     clearSession(): void {
         this.session = null;
         this.isUserAuthenticated$.next(false);
-        console.log("local session terminated")
+        localStorage.removeItem(this.WAS_USER_LOGGED);
+        console.log("local session terminated");
     }
 
     isAuthenticatedAsObservable(): BehaviorSubject<boolean> {
         return this.isUserAuthenticated$;
     }
 
+    wasUserPreviouslyLogged(): boolean {
+        const logged: string | null = localStorage.getItem(this.WAS_USER_LOGGED);
+        return (logged === null || logged !== "true") ? false : true;
+    }
 }

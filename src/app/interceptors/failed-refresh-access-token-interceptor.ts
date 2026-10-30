@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { inject } from '@angular/core';
 import { LogAgainDialog } from '../components/log-again-dialog/log-again-dialog';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth-service';
 
 /**
  * Interceptor that verifies if the response of a failed http request is of type
@@ -18,6 +19,7 @@ export const failedRefreshAccessTokenInterceptor: HttpInterceptorFn = (req, next
 
     const dialogService: MatDialog = inject(MatDialog);
     const routerService: Router = inject(Router)
+    const authService: AuthService = inject(AuthService);
 
     return next(req).pipe(
         catchError((response: HttpErrorResponse) => {
@@ -25,20 +27,28 @@ export const failedRefreshAccessTokenInterceptor: HttpInterceptorFn = (req, next
             const body: HttpResponseErrorBody = response.error as HttpResponseErrorBody;
 
             if (body.error === HttpErrorEnum.INVALID_REFRESH_TOKEN) {
-                // 1. inform the user he needs to login again
-                const dialog = dialogService.open(LogAgainDialog);
 
-                dialog.afterClosed().subscribe({
-                    next: () => {
-                        routerService.navigate(['login'], {
-                            queryParams: {
-                                // for a url like: localhost:4200/dashboard/profile
-                                // returns: dashboard/profile (without the preceeding /)
-                                redirectTo: routerService.url.substring(1)
-                            }
-                        });
-                    }
-                })
+                if(authService.wasUserPreviouslyLogged()) {
+
+                    authService.clearSession();
+
+                    const dialog = dialogService.open(LogAgainDialog);
+
+                    dialog.afterClosed().subscribe({
+                        next: () => {
+                            routerService.navigate(['login'], {
+                                queryParams: {
+                                    // for a url like: localhost:4200/dashboard/profile
+                                    // returns: dashboard/profile (without the preceeding /)
+                                    redirectTo: routerService.url.substring(1)
+                                }
+                            });
+                        }
+                    })
+
+
+                }
+
             }
 
             // if the error is not a an invalid token continue the chain
