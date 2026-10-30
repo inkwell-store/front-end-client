@@ -5,7 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-footer',
-    imports: [MatIcon, MatDivider],
+    imports: [MatIcon],
     templateUrl: './footer.html',
     styleUrl: './footer.css',
 })

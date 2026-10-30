@@ -1,15 +1,14 @@
 import { Component, inject, OnInit, signal, Signal, TemplateRef, viewChild } from '@angular/core';
 import { MatDivider } from '@angular/material/divider';
 import { MatIcon } from '@angular/material/icon';
-import { Profile } from '../../models/Profile';
 import { HttpCustomerService } from '../../services/http-customer-service';
 import { CustomerNamePipe } from '../../pipes/customer-name-pipe';
 import { NullableDatePipe } from '../../pipes/nullable-date-pipe';
 import { MatButtonModule } from '@angular/material/button';
 import { ProfileForm } from '../../components/profile-form/profile-form';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { PatchableProfile } from '../../models/PatchableProfile';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PatchableProfile, Profile, ProfileProperties } from '../../models/customer-profile-models';
 
 @Component({
     selector: 'app-customer-profile',
@@ -35,7 +34,14 @@ export class CustomerProfile implements OnInit {
 
     ngOnInit(): void {
 
-        this.httpCustomerService.getProfile().subscribe({
+        const attributes: ProfileProperties[] = [
+            ProfileProperties.FIRST_NAME,
+            ProfileProperties.LAST_NAME,
+            ProfileProperties.PHOTO,
+            ProfileProperties.DATE_OF_BIRTH
+        ];
+
+        this.httpCustomerService.getProfile(attributes).subscribe({
             next: (response) => {
                 this.profileInfo.set(response);
             }

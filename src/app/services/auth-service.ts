@@ -49,6 +49,7 @@ export class AuthService {
     clearSession(): void {
         this.session = null;
         this.isUserAuthenticated$.next(false);
+        console.log("local session terminated")
     }
 
     isAuthenticatedAsObservable(): BehaviorSubject<boolean> {

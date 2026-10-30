@@ -3,7 +3,7 @@
 @if(profileInfo() != undefined) {
 <div class="relative w-50 h-50 m-auto md:m-0">
     <div class=" w-48 h-48 mt-3 rounded-full overflow-hidden">
-        <img [src]="profileInfo()!.photo !== null ? profileInfo()!.photo : 'image-placegolder.png'" alt="profile picture" class="h-full w-full object-cover" />
+        <img [src]="profileInfo()!.photo !== null ? profileInfo()!.photo : 'image-placeholder.png'" alt="profile picture" class="h-full w-full object-cover" />
     </div>
     <div class="absolute right-0 bottom-0">
         <button matIconButton (click)="updatePhoto()">
@@ -21,10 +21,7 @@
 
     @if(profileInfo()!.firstName === null || profileInfo()!.lastName === null) {
     <p>
-        * It seems your profile is not completed yet. Please, consider filling the fields
-        <span>@if(profileInfo()!.firstName === null) {<i><b>first name, </b></i>}</span>
-        <span>@if(profileInfo()!.lastName === null) {<i><b>last name</b></i>}</span>
-        in order to use all the features.
+        * It seems your profile is not completed yet. Please, consider filling the <b>*required</b> fields in order to use all the features.
     </p>
     }
     <button matFab extended (click)="openProfileDialog()">
@@ -39,18 +36,18 @@
 <div class="flex flex-col md:flex-row gap-10 md:gap-30 mt-10">
 
     <div>
-        <b>First name:</b>
-        <p>{{profileInfo()!.firstName | customerName}}</p>
+        <b>First name*:</b>
+        <p>{{profileInfo()?.firstName | customerName}}</p>
     </div>
 
     <div>
-        <b>Last name:</b>
-        <p>{{profileInfo()!.lastName | customerName}}</p>
+        <b>Last name*:</b>
+        <p>{{profileInfo()?.lastName | customerName}}</p>
     </div>
 
     <div>
         <b>Date of birth:</b>
-        <p>{{profileInfo()!.dateOfBirth | nullableDate}}</p>
+        <p>{{profileInfo()?.dateOfBirth | nullableDate}}</p>
     </div>
 
 </div>

@@ -7,10 +7,11 @@ import { CustomerAddress } from './pages/customer-address/customer-address';
 import { CustomerProfile } from './pages/customer-profile/customer-profile';
 import { CustomerSettings } from './pages/customer-settings/customer-settings';
 import { NotFound } from './pages/not-found/not-found';
+import { userAuthenticatedGuard } from './guards/user-authenticated-guard';
 
 export const routes: Routes = [
-    { path: 'login', component: Login },
-    { path: 'create-account', component: AccountCreation },
+    { path: 'login', component: Login, canMatch: [userAuthenticatedGuard] },
+    { path: 'create-account', component: AccountCreation, canActivate: [userAuthenticatedGuard] },
     { path: 'home', component: Home },
 
     {

@@ -8,7 +8,7 @@ export class NullableDatePipe implements PipeTransform {
 
     private readonly datePipe: DatePipe = inject(DatePipe);
 
-    transform(value: Date | null): string {
-        return (value === null) ? "-" : this.datePipe.transform(value)!;
+    transform(value: Date | null | undefined): string {
+        return (value === null || value === undefined ) ? "-" : this.datePipe.transform(value)!;
     }
 }

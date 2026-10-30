@@ -10,7 +10,6 @@ export const authInterceptor: HttpInterceptorFn = (
 ) => {
 
     const authService: AuthService = inject(AuthService);
-    const token: string | null = authService.getJwtTokenAsString();
     const BASE_URL: string = `${environment.httpApiUrl}`;
 
     /**
@@ -23,6 +22,8 @@ export const authInterceptor: HttpInterceptorFn = (
         `${BASE_URL}/${ResourceEnum.AUTH}/${ResourceEnum.REFRESH}`,
         `${BASE_URL}/${ResourceEnum.AUTH}/${ResourceEnum.LOGOUT}`,
     ];
+
+    // console.log("request url: " + req.urlWithParams);
 
     // exclude token addition for public endpoints:
     if (publicEndpoints.includes(req.url)) {

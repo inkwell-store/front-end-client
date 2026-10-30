@@ -2,9 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatFormField, MatInputModule, MatLabel } from '@angular/material/input';
-import { Profile } from '../../models/Profile';
 import { MatButton } from '@angular/material/button';
-import { PatchableProfile } from '../../models/PatchableProfile';
+import { PatchableProfile } from '../../models/customer-profile-models';
 
 @Component({
     selector: 'app-profile-form',

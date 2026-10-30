@@ -6,8 +6,7 @@ import { environment } from '../../environments/environment';
 import { ResourceEnum } from '../enums/ResourceEnum';
 import { PatchableAddreess } from '../models/PatchableAddreess';
 import { SimpleAddress } from '../models/SimpleAddress';
-import { Profile } from '../models/Profile';
-import { PatchableProfile } from '../models/PatchableProfile';
+import { PatchableProfile, Profile, ProfileProperties } from '../models/customer-profile-models';
 
 @Service()
 export class HttpCustomerService {
@@ -35,8 +34,12 @@ export class HttpCustomerService {
         return this.httpClient.post<IdentifiedAddress>(`${this.BASE_URL}/${ResourceEnum.ADDRESS}`, address);
     }
 
-    getProfile(): Observable<Profile> {
-        return this.httpClient.get<Profile>(`${this.BASE_URL}/${ResourceEnum.PROFILE}`);
+    getProfile(attributes: ProfileProperties[]): Observable<Profile> {
+        const list = attributes.join(',');
+
+        return this.httpClient.get<Profile>(`${this.BASE_URL}/${ResourceEnum.PROFILE}`, {
+            params: { attributes: list }
+        });
     }
 
     patchProfile(profile: PatchableProfile): Observable<Profile> {

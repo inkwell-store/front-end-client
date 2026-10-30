@@ -1,12 +1,46 @@
-<nav class="bg-(--mat-sys-primary) p-2">
-    <li class="list-none">
-        <ul class="text-(--mat-sys-on-primary)">
-            <li>
-                <a href="home" class="flex items-center gap-2">
-                    <mat-icon fontIcon="menu_book"></mat-icon>
-                    <span>Inkwell</span>
-                </a>
-            </li>
-        </ul>
-    </li>
+<nav class="bg-(--mat-sys-primary) py-4 px-7 text-(--mat-sys-on-primary) flex justify-between items-center">
+
+    <a routerLink="home" class="flex items-center gap-2">
+        <mat-icon fontIcon="menu_book"></mat-icon>
+        <span>Inkwell</span>
+    </a>
+
+    <ul class="list-none text-(--mat-sys-on-primary) flex gap-7">
+        @for (item of navItems; track $index) {
+        <li>
+            <a [routerLink]="item.path" class="hover:underline">{{item.name}}</a>
+        </li>
+        }
+    </ul>
+
+    @if(userAuthenticated()) {
+    <div class="flex items-center cursor-pointer" [matMenuTriggerFor]="menu">
+        <div class="w-7 h-7 rounded-full overflow-hidden">
+            <img [src]='userPhoto() | userProfileImage' alt="profile picture" class="h-full w-full object-cover" />
+        </div>
+        <p class="text-xs ms-3">{{userEmail()}}</p>
+        <mat-icon fontIcon="arrow_drop_down"></mat-icon>
+    </div>
+
+    <mat-menu #menu>
+        <a routerLink="dashboard" mat-menu-item>
+            <mat-icon fontIcon="dashboard"></mat-icon>
+            <span>Dashboard</span>
+        </a>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="logout()">
+            <mat-icon fontIcon="logout"></mat-icon>
+            <span>logout</span>
+        </button>
+    </mat-menu>
+
+    }@else {
+    <p>
+        <a routerLink="login" class="hover:underline">login</a>
+        <span class="mx-2">|</span>
+        <a routerLink="create-account" class="hover:underline">register</a>
+    </p>
+    }
+
+
 </nav>
